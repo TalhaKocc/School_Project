@@ -1,4 +1,4 @@
-package com.schoolproject.service;
+package com.schoolproject.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

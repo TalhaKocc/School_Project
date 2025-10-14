@@ -1,4 +1,4 @@
-package com.schoolproject.service;
+package com.schoolproject.model;
 
 import com.schoolproject.dao.StudentDao;
 import com.schoolproject.pojo.CourseBean;
