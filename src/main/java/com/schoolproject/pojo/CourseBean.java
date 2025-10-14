@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserBean {
+public class CourseBean {
 	private int id;
 	private String name;
-	private String email;
-	private String password;
-	private String role;
+	private StudentBean student;
+	private TeacherBean teacher;
+	
 }
