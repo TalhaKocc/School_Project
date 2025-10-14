@@ -1,5 +1,8 @@
 package com.schoolproject.dao;
 
-public class UserDao {
+import com.schoolproject.pojo.UserBean;
 
+public interface UserDao {
+	void addUser();
+	UserBean login(UserBean userBean);
 }
