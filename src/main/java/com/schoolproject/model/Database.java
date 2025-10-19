@@ -11,10 +11,13 @@ public class Database {
 	public static Connection getConnection() {
 		Connection connection = null;
 		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
 			connection = DriverManager.getConnection(URL,USER,PASSWORD);
 			System.out.println("Database Connected");
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.err.println("!!! VERITABANI BAĞLANTI HATASI !!!");
+	        e.printStackTrace();
 		}
 		return connection;
 	}
