@@ -5,6 +5,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Giriş Ekranı</title>
+<style type="text/css">
+	div {
+		background-color:lightblue;
+		margin: 300px;
+		border: 3px solid black;
+		border-radius: 50px;
+
+</style>
 </head>
 <body>
  <div align="center">

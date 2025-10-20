@@ -7,16 +7,6 @@
 <title>Öğrenci Giriş Ekranı</title>
 </head>
 <body>
-	<form>
-		<p>
-			Öğrenci Eposta Adresiniz: <input type="email">
-		</p>
-		
-		<p>
-			Öğrenci Şifreniz: <input type="password">
-		</p>
-		<button type="button">Giriş</button>
-	</form>
 	
 </body>
 </html>
