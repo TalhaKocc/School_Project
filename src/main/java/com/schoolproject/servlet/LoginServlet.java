@@ -35,10 +35,10 @@ public class LoginServlet extends HttpServlet {
          
                 HttpSession session = request.getSession();
                 
-                // Bütün Kullanıcı nesnesini oturuma kaydet (ID, İsim, Rol vb. içerir)
+                
                 session.setAttribute("currentUser", user); 
                 
-                // 2. ADIM: ROL KONTROLÜ VE YÖNLENDİRME
+             
                 String role = user.getRole();
 
                 if ("Student".equals(role)) {

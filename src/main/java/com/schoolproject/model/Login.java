@@ -25,7 +25,7 @@ public class Login implements UserDao {
 			ResultSet rs = pstm.executeQuery();
 			
 			if(rs.next()) {
-				System.out.println("Kullanıcı bulundu: " + rs.getString("email"));
+				
 				loggedInUser = new UserBean(); 
 
 				loggedInUser.setId(rs.getInt("userId"));
