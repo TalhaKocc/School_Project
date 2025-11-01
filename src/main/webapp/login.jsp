@@ -3,33 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Giriş Ekranı</title>
-<style type="text/css">
-	div {
-		background-color:lightblue;
-		margin: 300px;
-		border: 3px solid black;
-		border-radius: 50px;
+<meta charset="UTF-8">
+<title>Giriş Yap</title>
 
-</style>
+<!-- Dış CSS dosyasına bağlanma (contextPath kullan) -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login-style.css">
+
 </head>
 <body>
- <div align="center">
-  <h1>Okul Sistemine Hoşgeldiniz</h1>
-  <form action="<%=request.getContextPath()%>/login"method="post">
-   <table style="with: 100%">
-    <tr>
-     <td>Eposta</td>
-     <td><input type="email" name="email" /></td>
-    </tr>
-    <tr>
-     <td>Şifre</td>
-     <td><input type="password" name="password" /></td>
-    </tr>
-   </table>
-   <input type="submit" value="Giriş Yap" />
-  </form>
- </div>
+    <div class="container">
+        <h2>Okul Sistemine Giriş Yap</h2>
+        <form action="<%=request.getContextPath()%>/login" method="post">
+            <input class="input" type="email" name="email" placeholder="E-posta" required><br>
+            <input class="input" type="password" name="password" placeholder="Şifre" required><br>
+            <button class="btn" type="submit">Giriş Yap</button>
+        </form>
+        <a class="link" href="register.jsp">Hesabın yok mu? Kayıt ol</a>
+
+        <% if (request.getAttribute("error") != null) { %>
+            <p class="error"><%= request.getAttribute("error") %></p>
+        <% } %>
+    </div>
 </body>
 </html>

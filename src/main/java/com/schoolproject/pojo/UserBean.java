@@ -28,5 +28,4 @@ public class UserBean implements Serializable{
 		this.role = role;
 	}
 	
-	
 }

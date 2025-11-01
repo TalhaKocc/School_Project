@@ -1,0 +1,92 @@
+@charset "UTF-8";
+@charset "UTF-8";
+/* login-style.css */
+:root{
+    --bg1: #74b9ff;
+    --bg2: #0984e3;
+    --card: #ffffff;
+    --accent: #0984e3;
+    --text: #2d3436;
+    --muted: #636e72;
+    --radius: 16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+/* container */
+.container{
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+    width: 360px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    text-align:center;
+}
+
+/* headings */
+.container h2{
+    font-size:20px;
+    color:var(--text);
+    margin-bottom:18px;
+}
+
+/* inputs */
+.input{
+    width: 88%;
+    padding: 10px 12px;
+    margin: 8px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size:14px;
+    outline:none;
+    background:#fbfdff;
+}
+.input:focus{
+    box-shadow: 0 6px 18px rgba(9,132,227,0.12);
+    border-color: var(--accent);
+}
+
+/* button */
+.btn{
+    display:inline-block;
+    margin-top:12px;
+    padding:10px 20px;
+    background:var(--accent);
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+.btn:hover{opacity:0.95}
+
+/* link */
+.link{
+    display:block;
+    margin-top:12px;
+    color:var(--muted);
+    text-decoration:none;
+}
+
+/* error */
+.error{
+    color:#ef4444;
+    margin-top:12px;
+    font-weight:600;
+    font-size:13px;
+}
+
+/* responsive */
+@media (max-width:420px){
+    .container{width:92%; padding:22px}
+    .input{width:100%}
+}
