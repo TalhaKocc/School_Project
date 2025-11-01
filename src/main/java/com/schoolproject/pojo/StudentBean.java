@@ -11,8 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StudentBean {
 	private int id;
-	private String name;
-	private String surname;
 	private int no;
 	private UserBean user;
+	
+	public StudentBean(String name, String surname, int no, UserBean user) {
+		this.no = no;
+		this.user = user;
+	}
 }
