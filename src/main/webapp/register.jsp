@@ -17,7 +17,6 @@
             <p>Hoşgeldiniz! Lütfen bilgilerinizi girin.</p>
         </div>
 
-        <!-- show server-side error if present -->
         <c:if test="${not empty errorMessage}">
             <div class="alert error">${errorMessage}</div>
         </c:if>
@@ -27,13 +26,13 @@
 
         <form id="registerForm" action="${pageContext.request.contextPath}/register" method="post" novalidate>
             <div class="form-row">
-                <label for="first_name">First name</label>
+                <label for="first_name">Adınız</label>
                 <input id="first_name" name="first_name" type="text" placeholder="İsim" required />
                 <small class="hint">Adınızı girin</small>
             </div>
 
             <div class="form-row">
-                <label for="last_name">Last name</label>
+                <label for="last_name">Soyadınız</label>
                 <input id="last_name" name="last_name" type="text" placeholder="Soyisim" required />
                 <small class="hint">Soyadınızı girin</small>
             </div>
@@ -45,15 +44,11 @@
             </div>
 
             <div class="form-row password-row">
-                <label for="password">Password</label>
+                <label for="password">Şifre</label>
                 <div class="password-wrap">
                     <input id="password" name="password" type="password" placeholder="Şifre" required minlength="8" />
-                    <button type="button" class="btn-icon" id="togglePwd" aria-label="Show/Hide password">👁️</button>
                 </div>
-                <div class="pw-meter">
-                    <div id="pwBar" class="bar"></div>
-                </div>
-                <small class="hint">En az 8 karakter — büyük harf, küçük harf ve rakam önerilir</small>
+                
             </div>
 
             <div class="form-row">

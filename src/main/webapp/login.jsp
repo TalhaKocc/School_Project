@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Giriş Yap</title>
 
-<!-- Dış CSS dosyasına bağlanma (contextPath kullan) -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login-style.css">
 
 </head>

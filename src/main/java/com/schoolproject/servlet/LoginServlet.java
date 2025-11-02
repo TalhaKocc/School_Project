@@ -54,15 +54,16 @@ public class LoginServlet extends HttpServlet {
 		if(loggedUser!=null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("currentUser", session);
+			session.setAttribute("user_id", loggedUser.getId());
 			
 			String role = loggedUser.getRole();
 			
 			if("Admin".equalsIgnoreCase(role)) {
-				response.sendRedirect("admin_dashboard");
+				response.sendRedirect("admin-dashboard");
 			} else if ("Teacher".equalsIgnoreCase(role)) {
-				response.sendRedirect("teacher_dashboard.jsp");
+				response.sendRedirect("teacher-dashboard.jsp");
 			}else if ("Student".equalsIgnoreCase(role)) {
-				response.sendRedirect("student_dashboard.jsp");
+				response.sendRedirect("student-dashboard.jsp");
 			}else {
 				response.sendRedirect("index.jsp");
 			}
