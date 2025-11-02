@@ -52,6 +52,7 @@ public class LoginServlet extends HttpServlet {
 		UserBean loggedUser = login.userLogin(userBean);
 		
 		if(loggedUser!=null) {
+			
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("currentUser", loggedUser);

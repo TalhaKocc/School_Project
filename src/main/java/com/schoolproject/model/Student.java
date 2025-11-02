@@ -8,42 +8,49 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.schoolproject.dao.StudentDao;
+import com.schoolproject.dto.StudentCourseDto;
+import com.schoolproject.dto.StudentGradeDto;
 import com.schoolproject.pojo.CourseBean;
+import com.schoolproject.pojo.GradeBean;
+import com.schoolproject.pojo.TeacherBean;
+import com.schoolproject.pojo.UserBean;
 
 
 
 
-public class Student {
+public class Student implements StudentDao{
 	private DataSource dataSource;
 
 	public Student(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	
-	public List<CourseBean> listCourse(int userId) throws Exception{
+	@Override
+	public List<StudentCourseDto> listCourse(int userId){
 		
-		List<CourseBean> courseList = new ArrayList<>();
+		List<StudentCourseDto> courseList = new ArrayList<>();
 		
-		String sql = "SELECT courses.course_id, courses.course_name " +
-					  "FROM courses " +
-					  "INNER JOIN grades ON courses.course_id = grades.course_id " +
-					  "INNER JOIN students ON students.student_id = grades.student_id " +
-					  "WHERE students.user_id = ?";
+		String sql = "SELECT courses.course_name, users.first_name, users.last_name " +
+                	"FROM grades " +
+                	"INNER JOIN courses ON grades.course_id = courses.course_id " +
+                	"INNER JOIN teachers ON grades.teacher_id = teachers.teacher_id " +
+                	"INNER JOIN users ON teachers.user_id = users.user_id " +
+                	"INNER JOIN students ON grades.student_id = students.student_id " +
+                	"WHERE students.user_id = ?";
 		
 		try(Connection connection = dataSource.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql)) {
-			
 			pstmt.setInt(1, userId);
 			
 			try(ResultSet rs = pstmt.executeQuery()) {
 				
 				while (rs.next()) {
-					CourseBean course = new CourseBean();
-					course.setId(rs.getInt("course_id"));
-					course.setName(rs.getString("course_name"));
+					StudentCourseDto courseDto = new StudentCourseDto();
+					courseDto.setCourseName(rs.getString("course_name"));
+					courseDto.setFirstName(rs.getString("first_name"));
+					courseDto.setLastName(rs.getString("last_name"));
 					
-					
-					courseList.add(course);
+					courseList.add(courseDto);
 		               
 				}
 			
@@ -51,12 +58,52 @@ public class Student {
 		} catch (Exception e) {
 			  System.out.println("ERROR in listCourse: " + e.getMessage());
 		      e.printStackTrace();
-		      throw e;
+		      
 		}
 		
 		return courseList;
-		
-		
-	    
+
     }
+	
+	@Override
+	public List<StudentGradeDto> listGrade(int userId) {
+		
+		List<StudentGradeDto> gradeList = new ArrayList<>();
+		
+		String sql = "SELECT courses.course_name, users.first_name, users.last_name, grades.grade1, grades.grade2, grades.result " +
+            	"FROM grades " +
+            	"INNER JOIN courses ON grades.course_id = courses.course_id " +
+            	"INNER JOIN teachers ON grades.teacher_id = teachers.teacher_id " +
+            	"INNER JOIN users ON teachers.user_id = users.user_id " +
+            	"INNER JOIN students ON grades.student_id = students.student_id " +
+            	"WHERE students.user_id = ?";
+		
+		try(Connection connection =dataSource.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, userId);
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()) {
+					StudentGradeDto gradeDto = new StudentGradeDto();
+					
+					gradeDto.setCourseName(rs.getString("course_name"));
+					gradeDto.setFirstName(rs.getString("first_name"));
+					gradeDto.setLastName(rs.getString("last_name"));
+					gradeDto.setNote1(rs.getLong("grade1"));
+					gradeDto.setNote2(rs.getLong("grade2"));
+					gradeDto.setResult(rs.getString("result"));
+					
+					gradeList.add(gradeDto);
+					
+				}
+			}
+			
+		} catch (Exception e) {
+			 System.out.println("ERROR in listCourse: " + e.getMessage());
+		      e.printStackTrace();
+		}
+		
+		return gradeList;
+		
+	}
 }	

@@ -11,9 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.schoolproject.dto.StudentCourseDto;
+import com.schoolproject.dto.StudentGradeDto;
 import com.schoolproject.model.DataBase;
 import com.schoolproject.model.Student;
 import com.schoolproject.pojo.CourseBean;
+import com.schoolproject.pojo.GradeBean;
+import com.schoolproject.pojo.UserBean;
 
 
 @WebServlet("/StudentServlet")
@@ -36,8 +40,7 @@ public class StudentServlet extends HttpServlet {
 	}
 
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-	        throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    doPost(request, response); 
 	}
 	
@@ -70,10 +73,10 @@ public class StudentServlet extends HttpServlet {
 		
 		
 		HttpSession session = request.getSession();
-		
 		int userId = (int) session.getAttribute("user_id");
 		
-		List<CourseBean> courses = student.listCourse(userId);
+		
+		List<StudentCourseDto> courses = student.listCourse(userId);
 		request.setAttribute("Course_List", courses);
 		request.getRequestDispatcher("student-course-list.jsp").forward(request, response);
 		
@@ -82,6 +85,12 @@ public class StudentServlet extends HttpServlet {
 	}
 	
 	private void listGrade (HttpServletRequest request,HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("user_id");
 		
+		
+		List<StudentGradeDto> grades = student.listGrade(userId);
+		request.setAttribute("Grade_List", grades);
+		request.getRequestDispatcher("student-grade-list.jsp").forward(request, response);
 	}
 }

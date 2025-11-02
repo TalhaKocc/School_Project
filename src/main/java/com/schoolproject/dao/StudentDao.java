@@ -1,10 +1,13 @@
 package com.schoolproject.dao;
 
-import com.schoolproject.pojo.CourseBean;
+import java.util.List;
+
+import com.schoolproject.dto.StudentCourseDto;
+import com.schoolproject.dto.StudentGradeDto;
 import com.schoolproject.pojo.GradeBean;
-import com.schoolproject.pojo.StudentBean;
 
 public interface StudentDao {
-	void listCourse(StudentBean studentBean,CourseBean courseBean);
-	void listGrade(StudentBean studentBean,CourseBean courseBean,GradeBean gradeBean);
+	List<StudentCourseDto> listCourse(int userId);
+	List<StudentGradeDto> listGrade(int userId);
+
 }

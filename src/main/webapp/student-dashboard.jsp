@@ -12,7 +12,7 @@
 
     <div class="sidebar">
         <h2>Öğrenci Paneli</h2>
-        <a href="student-grade-list.jsp">Notları Gör</a>
+        <a href="StudentServlet?command=LIST_GRADE">Notları Gör</a>
         <a href="StudentServlet?command=LIST_COURSE">Dersleri Gör</a>
     </div>
 

@@ -10,21 +10,23 @@
 <body>
 
     <div class="container">
-        <h2> My Courses</h2>
+        <h2>Kayıtlı Derslerim </h2>
         <form action="StudentServlet" method="post">
             <input type="hidden" name="command" value="LIST_COURSE">
             <table>
                 <thead>
                     <tr>
-                        <th>Course ID</th>
-                        <th>Course Name</th>
+                        <th>Ders Adı</th>
+                        <th>Öğretmen Adı</th>
+                        <th>Öğretmen Soyadı</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="course" items="${Course_List}">
                         <tr>
-                            <td>${course.id}</td>
-                            <td>${course.name}</td>
+                            <td>${course.courseName}</td>
+                            <td>${course.firstName}</td>
+                            <td>${course.lastName}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

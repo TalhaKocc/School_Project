@@ -26,20 +26,14 @@ public class Login{
 			pstmt.setString(1,userBean.getEmail());
 			pstmt.setString(2, userBean.getPassword());
 			
-			
-
-			
 			try(ResultSet rs = pstmt.executeQuery();){
 				
-				System.out.println("SQL: " + pstmt);
 
 				if(rs.next()) {
 					userBean.setId(rs.getInt("user_id"));
 					userBean.setEmail(rs.getString("email"));
 					userBean.setRole(rs.getString("role"));
-					System.out.println("E-posta: " + userBean.getEmail());
-					System.out.println("Şifre: " + userBean.getPassword());
-					
+
 					return userBean;
 			    }else {
 					System.out.println("Kullanıcı Bulunamadı");
