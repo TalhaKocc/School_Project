@@ -22,10 +22,10 @@ body {
 }
 
 .sidebar h2 {
-    font-size: 20px;
-    text-align: center;
+    font-size: 30px;
+    left: 10px;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     color: #00c4ff;
     letter-spacing: 1px;
 }

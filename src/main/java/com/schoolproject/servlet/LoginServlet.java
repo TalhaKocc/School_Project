@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 			login = new Login(dataSource);
 			
 		}catch (Exception e) {
-			
+			throw new ServletException("Login servlet initialization failed", e);
 		}
 	}
 
@@ -53,7 +53,8 @@ public class LoginServlet extends HttpServlet {
 		
 		if(loggedUser!=null) {
 			HttpSession session = request.getSession();
-			session.setAttribute("currentUser", session);
+			
+			session.setAttribute("currentUser", loggedUser);
 			session.setAttribute("user_id", loggedUser.getId());
 			
 			String role = loggedUser.getRole();

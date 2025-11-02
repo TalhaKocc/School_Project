@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <h2>📚 My Courses</h2>
+        <h2> My Courses</h2>
         <form action="StudentServlet" method="post">
             <input type="hidden" name="command" value="LIST_COURSE">
             <table>

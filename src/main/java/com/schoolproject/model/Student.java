@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 import com.schoolproject.pojo.CourseBean;
 
-import com.schoolproject.pojo.UserBean;
+
 
 
 public class Student {
@@ -24,35 +24,38 @@ public class Student {
 		
 		List<CourseBean> courseList = new ArrayList<>();
 		
-		String sql = "SELECT courses.course_id,courses.course_name"+
-					  "FROM courses"+
-					  "INNER JOIN grades ON courses.course_id = grades.course_id"+
-					  "INNER JOIN students ON students.student_id = grades.student_id"+
+		String sql = "SELECT courses.course_id, courses.course_name " +
+					  "FROM courses " +
+					  "INNER JOIN grades ON courses.course_id = grades.course_id " +
+					  "INNER JOIN students ON students.student_id = grades.student_id " +
 					  "WHERE students.user_id = ?";
 		
 		try(Connection connection = dataSource.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			
-			UserBean userBean = new UserBean();
-			pstmt.setInt(1, userBean.getId());
+			pstmt.setInt(1, userId);
 			
 			try(ResultSet rs = pstmt.executeQuery()) {
 				
-				if (rs.next()) {
+				while (rs.next()) {
 					CourseBean course = new CourseBean();
 					course.setId(rs.getInt("course_id"));
 					course.setName(rs.getString("course_name"));
 					
-					courseList.add(course);
 					
+					courseList.add(course);
+		               
 				}
-				
 			
 		    } 
 		} catch (Exception e) {
-			e.printStackTrace();
+			  System.out.println("ERROR in listCourse: " + e.getMessage());
+		      e.printStackTrace();
+		      throw e;
 		}
+		
 		return courseList;
+		
 		
 	    
     }

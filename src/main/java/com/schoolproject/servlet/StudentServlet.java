@@ -35,16 +35,20 @@ public class StudentServlet extends HttpServlet {
 		}
 	}
 
-
-
-
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+	    doPost(request, response); 
+	}
+	
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			
 			String command = request.getParameter("command");
 			
-			if(command != null) {
-				command ="LIST";
+			if(command == null) {
+				command ="LIST_COURSE";
 			}
 			switch(command) {
 			
@@ -56,18 +60,25 @@ public class StudentServlet extends HttpServlet {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			   e.printStackTrace();
+		        request.setAttribute("error", "İşlem sırasında hata oluştu");
+		        request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 	}
 
 	private void listCourse (HttpServletRequest request,HttpServletResponse response) throws Exception {
 		
+		
 		HttpSession session = request.getSession();
+		
 		int userId = (int) session.getAttribute("user_id");
 		
 		List<CourseBean> courses = student.listCourse(userId);
 		request.setAttribute("Course_List", courses);
 		request.getRequestDispatcher("student-course-list.jsp").forward(request, response);
+		
+		
+		
 	}
 	
 	private void listGrade (HttpServletRequest request,HttpServletResponse response) throws Exception{
