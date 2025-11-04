@@ -11,10 +11,7 @@ import javax.sql.DataSource;
 import com.schoolproject.dao.StudentDao;
 import com.schoolproject.dto.StudentCourseDto;
 import com.schoolproject.dto.StudentGradeDto;
-import com.schoolproject.pojo.CourseBean;
-import com.schoolproject.pojo.GradeBean;
-import com.schoolproject.pojo.TeacherBean;
-import com.schoolproject.pojo.UserBean;
+
 
 
 

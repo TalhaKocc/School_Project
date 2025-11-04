@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.schoolproject.model.DataBase;
-import com.schoolproject.model.Login;
 import com.schoolproject.model.Register;
 import com.schoolproject.pojo.UserBean;
 

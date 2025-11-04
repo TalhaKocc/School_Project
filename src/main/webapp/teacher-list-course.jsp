@@ -34,7 +34,7 @@
         </c:if>
 		</form>
         <div class="actions">
-            <a href="teacher-dashboard.jsp" class="btn">Geri</a>
+            <a href="teacher-dashboard.jsp" class="btn">Geri Dön</a>
         </div>
         
     </div>

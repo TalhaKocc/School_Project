@@ -3,7 +3,6 @@ package com.schoolproject.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.schoolproject.dao.TeacherDao;
 import com.schoolproject.dto.AddGradeTeacherDto;
 import com.schoolproject.dto.ListCourseTeacherDto;
 import com.schoolproject.dto.ListGradeTeacherDto;
-import com.schoolproject.dto.StudentCourseDto;
 
 public class Teacher implements TeacherDao{
 	
@@ -48,9 +46,7 @@ public class Teacher implements TeacherDao{
 			
 			try(ResultSet rs = pstmt.executeQuery()) {
 				while(rs.next()) {
-					System.out.println("Bulunan kurs: " + rs.getString("course_name"));
-
-					
+		
 					ListCourseTeacherDto courseTeacherDto = new ListCourseTeacherDto();
 					courseTeacherDto.setCourseName(rs.getString("course_name"));
 					courseList.add(courseTeacherDto);
@@ -63,20 +59,48 @@ public class Teacher implements TeacherDao{
 				
 		}
 		
-		System.out.println("User ID: " + userId);
-		System.out.println("SQL çalıştı, kurslar alınıyor...");
-
-		
 		return courseList;
 	}
 
 	@Override
 	public List<ListGradeTeacherDto> listGrade(int userId) {
-
-		return null;
+		
+		List<ListGradeTeacherDto> gradeList = new ArrayList<>();
+		
+		String sql = "SELECT courses.course_name, users.first_name, users.last_name, grades.grade1, grades.grade2, grades.result " +
+				"FROM grades " +
+				"INNER JOIN students ON grades.student_id = students.student_id " +
+				"INNER JOIN users ON students.user_id = users.user_id " +
+				"INNER JOIN teachers ON grades.teacher_id = teachers.teacher_id " +
+				"INNER JOIN courses ON grades.course_id = courses.course_id " +
+				"WHERE teachers.user_id = ? ";
+		
+		try(Connection connection = dataSource.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql);) {
+			
+			pstmt.setInt(1, userId);
+			try(ResultSet rs = pstmt.executeQuery()){
+				while(rs.next()) {
+					ListGradeTeacherDto listGrade = new ListGradeTeacherDto();
+					
+					listGrade.setCourseName(rs.getString("course_name"));
+					listGrade.setStudentFirstName(rs.getString("first_name"));
+					listGrade.setStudentLastName(rs.getString("last_name"));
+					listGrade.setGrade1(rs.getLong("grade1"));
+					listGrade.setGrade2(rs.getLong("grade2"));
+					listGrade.setResult(rs.getString("result"));
+					
+					gradeList.add(listGrade);
+					
+				}
+			}
+			
+		} catch (Exception e) {
+			 System.out.println("ERROR in listCourse: " + e.getMessage());
+		      e.printStackTrace();
+		  
+		}
+		return gradeList;
 	}
-
-
-
 
 }

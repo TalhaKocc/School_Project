@@ -8,9 +8,9 @@ import lombok.Setter;
 public class ListGradeTeacherDto {
 	private String studentFirstName;
 	private String studentLastName;
-	private String coursName;
-	private int grade1;
-	private int grade2;
+	private String courseName;
+	private long grade1;
+	private long grade2;
 	private String result;
 	
 }

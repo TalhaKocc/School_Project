@@ -11,14 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-
 import com.schoolproject.dto.AddGradeTeacherDto;
 import com.schoolproject.dto.ListCourseTeacherDto;
 import com.schoolproject.dto.ListGradeTeacherDto;
-import com.schoolproject.dto.StudentCourseDto;
-import com.schoolproject.dto.StudentGradeDto;
 import com.schoolproject.model.DataBase;
-import com.schoolproject.model.Student;
 import com.schoolproject.model.Teacher;
 
 
@@ -100,7 +96,7 @@ public class TeacherServlet extends HttpServlet {
 		
 		List<ListGradeTeacherDto> grades = teacher.listGrade(userId);
 		request.setAttribute("Teacher_Grade_List", grades);
-		request.getRequestDispatcher("teacher-grade-list.jsp").forward(request, response);
+		request.getRequestDispatcher("teacher-list-grade.jsp").forward(request, response);
 	}
 
 	private void addTeacherGrade (HttpServletRequest request , HttpServletResponse response,int userId) throws Exception{
