@@ -25,18 +25,21 @@ public class Student implements StudentDao{
 	public Student(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+	
 	@Override
 	public List<StudentCourseDto> listCourse(int userId){
 		
 		List<StudentCourseDto> courseList = new ArrayList<>();
 		
-		String sql = "SELECT courses.course_name, users.first_name, users.last_name " +
-                	"FROM grades " +
-                	"INNER JOIN courses ON grades.course_id = courses.course_id " +
-                	"INNER JOIN teachers ON grades.teacher_id = teachers.teacher_id " +
-                	"INNER JOIN users ON teachers.user_id = users.user_id " +
-                	"INNER JOIN students ON grades.student_id = students.student_id " +
-                	"WHERE students.user_id = ?";
+		String sql = "SELECT DISTINCT courses.course_name, users.first_name, users.last_name " +
+						"FROM student_courses " +
+						"INNER JOIN courses ON student_courses.course_id = courses.course_id " +
+						"INNER JOIN teacher_courses ON courses.course_id = teacher_courses.course_id " +
+						"INNER JOIN teachers ON teacher_courses.teacher_id = teachers.teacher_id " +
+						"INNER JOIN users ON teachers.user_id = users.user_id " +
+						"INNER JOIN students ON student_courses.student_id = students.student_id " +
+						"WHERE students.user_id = ?";
+
 		
 		try(Connection connection = dataSource.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql)) {

@@ -10,9 +10,10 @@
 
     <div class="sidebar">
         <h2>Öğretmen Paneli</h2>
-        <a href="teacherCourses.jsp">Kayıtlı Dersleri Gör</a>
-        <a href="addGrades.jsp">Not Girme ve Güncelleme Ekranı</a>
-        <a href="updateGrades.jsp">Not Görme Ekranı</a>
+        <a href="TeacherServlet?command=TEACHER_LIST_COURSE">Kayıtlı Dersleri Gör</a>
+        <a href="TeacherServlet?command=TEACHER_ADD_GRADE">Not Girme Ekranı</a>
+        <a href="TeacherServlet?command=TEACHER_UPDATE_GRADE">Not Güncelleme Ekranı</a>
+        <a href="TeacherServlet?command=TEACHER_LIST_GRADE">Not Görme Ekranı</a>
     </div>
 
     <div class="main">

@@ -15,9 +15,7 @@ import com.schoolproject.dto.StudentCourseDto;
 import com.schoolproject.dto.StudentGradeDto;
 import com.schoolproject.model.DataBase;
 import com.schoolproject.model.Student;
-import com.schoolproject.pojo.CourseBean;
-import com.schoolproject.pojo.GradeBean;
-import com.schoolproject.pojo.UserBean;
+
 
 
 @WebServlet("/StudentServlet")
@@ -46,6 +44,15 @@ public class StudentServlet extends HttpServlet {
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(false);
+		if(session ==null || session.getAttribute("user_id")==null) {
+			response.sendRedirect("login.jsp");
+			return;
+		}
+		
+		int userId = (int) session.getAttribute("user_id");
+		
 		try {
 			
 			String command = request.getParameter("command");
@@ -55,9 +62,9 @@ public class StudentServlet extends HttpServlet {
 			}
 			switch(command) {
 			
-			case "LIST_COURSE": {listCourse(request,response); break;}
+			case "LIST_COURSE": {listCourse(request,response,userId); break;}
 			
-			case "LIST_GRADE": {listGrade(request,response); break; }
+			case "LIST_GRADE": {listGrade(request,response,userId); break; }
 			
 			}
 			
@@ -69,13 +76,8 @@ public class StudentServlet extends HttpServlet {
 		}
 	}
 
-	private void listCourse (HttpServletRequest request,HttpServletResponse response) throws Exception {
-		
-		
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("user_id");
-		
-		
+	private void listCourse (HttpServletRequest request,HttpServletResponse response, int userId) throws Exception {
+	
 		List<StudentCourseDto> courses = student.listCourse(userId);
 		request.setAttribute("Course_List", courses);
 		request.getRequestDispatcher("student-course-list.jsp").forward(request, response);
@@ -84,10 +86,7 @@ public class StudentServlet extends HttpServlet {
 		
 	}
 	
-	private void listGrade (HttpServletRequest request,HttpServletResponse response) throws Exception{
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("user_id");
-		
+	private void listGrade (HttpServletRequest request,HttpServletResponse response,int userId) throws Exception{
 		
 		List<StudentGradeDto> grades = student.listGrade(userId);
 		request.setAttribute("Grade_List", grades);

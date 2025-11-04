@@ -8,6 +8,6 @@ import com.schoolproject.pojo.GradeBean;
 
 public interface StudentDao {
 	List<StudentCourseDto> listCourse(int userId);
-	List<StudentGradeDto> listGrade(int userId);
+	List<StudentGradeDto> listGrade(int UserId);
 
 }

@@ -1,0 +1,64 @@
+@charset "UTF-8";
+/* teacher-style.css */
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background:#f4f7fb;
+    margin:0;
+    padding:0;
+    color:#333;
+}
+
+.container {
+    width: 88%;
+    max-width: 980px;
+    margin: 48px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    padding: 24px 28px;
+}
+
+h2 {
+    text-align:center;
+    color:#1f4a8a;
+    margin-bottom:18px;
+}
+
+.course-table {
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+}
+
+.course-table th, .course-table td {
+    padding:12px 14px;
+    border-bottom:1px solid #e6e9ef;
+    text-align:left;
+}
+
+.course-table thead th {
+    background:#1f4a8a;
+    color:#fff;
+    font-weight:600;
+}
+
+.course-table tbody tr:hover {
+    background:#fbfdff;
+}
+
+.actions {
+    margin-top:18px;
+    text-align:right;
+}
+
+a.btn {
+    display:inline-block;
+    background:#1f4a8a;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    box-shadow:0 4px 10px rgba(31,74,138,0.12);
+}
+
+a.btn:hover { background:#16365f; }
