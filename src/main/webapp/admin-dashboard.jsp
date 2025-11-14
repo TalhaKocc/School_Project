@@ -12,6 +12,7 @@
         <h2>Admin Paneli</h2>
         <a href="AdminServlet?command=ADMIN_LIST_TEACHER">Öğretmenleri Gör</a>
         <a href="AdminServlet?command=ADMIN_LIST_STUDENT">Öğrencileri Gör</a>
+        <a href="AdminServlet?command=ADMIN_LIST_COURSE">Dersleri Gör</a>
         <a href="AdminServlet?command=ADMIN_ADD_TEACHER">Yeni Öğretmen Ekle</a>
         <a href="AdminServlet?command=ADMIN_ADD_COURSE">Yeni Ders Ekle</a>
     </div>
