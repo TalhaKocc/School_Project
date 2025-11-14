@@ -11,8 +11,7 @@
     <div class="sidebar">
         <h2>Öğretmen Paneli</h2>
         <a href="TeacherServlet?command=TEACHER_LIST_COURSE">Kayıtlı Dersleri Gör</a>
-        <a href="TeacherServlet?command=TEACHER_ADD_GRADE">Not Girme Ekranı</a>
-        <a href="TeacherServlet?command=TEACHER_UPDATE_GRADE">Not Güncelleme Ekranı</a>
+        <a href="TeacherServlet?command=LOAD_ADD_GRADE_PAGE">Not Girme Ekranı</a>
         <a href="TeacherServlet?command=TEACHER_LIST_GRADE">Not Görme Ekranı</a>
     </div>
 
@@ -22,7 +21,6 @@
     </div>
 
     <button class="logout-btn" onclick="window.location.href='index.jsp'">Çıkış Yap</button>
-
 
 </body>
 </html>
