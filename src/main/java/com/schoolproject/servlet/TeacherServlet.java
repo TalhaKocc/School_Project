@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import com.schoolproject.dto.AddGradeTeacherDto;
 import com.schoolproject.dto.ListCourseTeacherDto;
 import com.schoolproject.dto.ListGradeTeacherDto;
+import com.schoolproject.dto.ListStudentTeacherDto;
 import com.schoolproject.model.DataBase;
 import com.schoolproject.model.Teacher;
 
@@ -40,12 +41,19 @@ public class TeacherServlet extends HttpServlet {
 
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    doPost(request, response); 
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
+		doPost(request, response); 
 	}
 	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+
 		HttpSession session = request.getSession(false);
 		if(session ==null || session.getAttribute("user_id")==null) {
 			response.sendRedirect("login.jsp");
@@ -72,6 +80,9 @@ public class TeacherServlet extends HttpServlet {
 			case "TEACHER_LOAD_GRADE":{loadGrade(request, response, userId);};break;
 			
 			case "TEACHER_UPDATE_GRADE":{updateGrade(request, response, userId);};break;
+			
+			case "LOAD_ADD_GRADE_PAGE": {loadAddGradePage(request, response, userId);break;}
+
 			}
 			
 			
@@ -99,28 +110,139 @@ public class TeacherServlet extends HttpServlet {
 		request.getRequestDispatcher("teacher-list-grade.jsp").forward(request, response);
 	}
 
+	private void loadAddGradePage(HttpServletRequest request, HttpServletResponse response, int userId)
+	        throws Exception {
+
+	    String courseIdStr = request.getParameter("courseId");
+	    Integer selectedCourseId = null;
+
+	    if (courseIdStr != null && !courseIdStr.isEmpty()) {
+	        selectedCourseId = Integer.parseInt(courseIdStr);
+	    }
+
+	    List<ListCourseTeacherDto> courses = teacher.listCourse(userId);
+	    request.setAttribute("Teacher_Course_List", courses);
+
+	    if (selectedCourseId != null) {
+	        List<ListStudentTeacherDto> students = teacher.listStudent(userId, selectedCourseId);
+	        request.setAttribute("Student_List", students);
+	    }
+
+	    List<ListGradeTeacherDto> grades = teacher.listGrade(userId);
+	    request.setAttribute("Teacher_Grade_List", grades);
+
+	    request.setAttribute("selectedCourseId", selectedCourseId);
+	    request.getRequestDispatcher("teacher-add-grade.jsp").forward(request, response);
+	}
+
+
+
+	
+	
 	private void addTeacherGrade (HttpServletRequest request , HttpServletResponse response,int userId) throws Exception{
+
+		    String studentIdStr = request.getParameter("studentId");
+		    String courseIdStr = request.getParameter("courseId");
+		    String grade1Str = request.getParameter("grade1");
+		    String grade2Str = request.getParameter("grade2");
+		    String result = request.getParameter("result");
+
+		    if (studentIdStr == null || studentIdStr.isEmpty() ||
+		        courseIdStr == null || courseIdStr.isEmpty() ||
+		        grade1Str == null || grade1Str.isEmpty() ||
+		        grade2Str == null || grade2Str.isEmpty() ||
+		        result == null || result.isEmpty()) {
+
+		        request.setAttribute("error", "Tüm alanları doldurmak zorundasın!");
+		        loadAddGradePage(request, response, userId);
+		        return;
+		    }
+
+		    try {
+		        int studentId = Integer.parseInt(studentIdStr);
+		        int courseId = Integer.parseInt(courseIdStr);
+		        long grade1 = Long.parseLong(grade1Str);
+		        long grade2 = Long.parseLong(grade2Str);
+
+		        AddGradeTeacherDto dto = new AddGradeTeacherDto(studentId, courseId, grade1, grade2, result);
+		        teacher.addGrade(dto, userId);
+
+		        request.setAttribute("success", "Not başarıyla kaydedildi!");
+		        listTeacherGrade(request, response, userId);
+
+		    } catch (Exception e) {
+		        request.setAttribute("error", "Notlar sadece rakam olmalı! (0-100)");
+		        loadAddGradePage(request, response, userId);
+		    }
 		
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String coursName = request.getParameter("coursName"); 
-		int grade1 =Integer.parseInt(request.getParameter("grade1"));
-		int grade2 = Integer.parseInt(request.getParameter("grade2"));
-		String result = request.getParameter("result");
-		
-		AddGradeTeacherDto addTeacherGradeDto = new AddGradeTeacherDto(firstName,lastName,coursName,grade1,grade2,result);
-		teacher.addGrade(addTeacherGradeDto);
-		
-		listTeacherGrade(request, response,userId);
 		
 	}
 	
 	private void loadGrade(HttpServletRequest request,HttpServletResponse response,int userId) throws Exception {
-		
-		
+		    String gradeIdStr = request.getParameter("gradeId");
+
+		    if (gradeIdStr == null || gradeIdStr.isEmpty()) {
+		        request.setAttribute("error", "Geçersiz not seçimi!");
+		        listTeacherGrade(request, response, userId);
+		        return;
+		    }
+
+		    int gradeId = Integer.parseInt(gradeIdStr);
+
+		    // Veritabanından o gradeId’ye ait notu çek
+		    ListGradeTeacherDto grade = teacher.getGradeById(gradeId,userId);
+
+		    if (grade == null) {
+		        request.setAttribute("error", "Not bulunamadı!");
+		        listTeacherGrade(request, response, userId);
+		        return;
+		    }
+
+		    // JSP’ye gönder
+		    request.setAttribute("grade", grade);
+		    request.getRequestDispatcher("teacher-update-grade.jsp").forward(request, response);
 	}
 
-	private void updateGrade(HttpServletRequest request,HttpServletResponse response,int userId) {
 		
+	
+
+	private void updateGrade(HttpServletRequest request,HttpServletResponse response,int userId)throws Exception{
+
+		    String studentIdStr = request.getParameter("studentId");
+		    String courseIdStr = request.getParameter("courseId");
+		    String grade1Str = request.getParameter("grade1");
+		    String grade2Str = request.getParameter("grade2");
+		    String result = request.getParameter("result");
+
+		    if (studentIdStr == null || studentIdStr.isEmpty() ||
+		        courseIdStr == null || courseIdStr.isEmpty() ||
+		        grade1Str == null || grade1Str.isEmpty() ||
+		        grade2Str == null || grade2Str.isEmpty() ||
+		        result == null || result.isEmpty()) {
+
+		        request.setAttribute("error", "Tüm alanları doldurmak zorundasın!");
+		        listTeacherGrade(request, response, userId);
+		        return;
+		    }
+
+		    try {
+		        int studentId = Integer.parseInt(studentIdStr);
+		        int courseId = Integer.parseInt(courseIdStr);
+		        double grade1 = Double.parseDouble(grade1Str);
+		        double grade2 = Double.parseDouble(grade2Str);
+
+		        AddGradeTeacherDto updateDto = new AddGradeTeacherDto(studentId, courseId, grade1, grade2, result);
+		        teacher.updateGrade(updateDto, userId);
+
+		        request.setAttribute("success", "Not başarıyla güncellendi!");
+		        listTeacherGrade(request, response, userId);
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        request.setAttribute("error", "Güncelleme sırasında hata oluştu!");
+		        listTeacherGrade(request, response, userId);
+		    }
 	}
+
+	
 }

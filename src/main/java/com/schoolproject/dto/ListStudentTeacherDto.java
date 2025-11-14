@@ -9,10 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddGradeTeacherDto {
+public class ListStudentTeacherDto {
 	private int studentId;
-	private int courseId;
-	private double grade1;
-	private double grade2;
-	private String result;
+	private String firstName;
+	private String lastName;
 }

@@ -11,7 +11,7 @@ public class DataBase {
 	static {
 		try {
 			HikariConfig config = new HikariConfig();
-			config.setJdbcUrl("jdbc:mysql://localhost:3306/student_project");
+			config.setJdbcUrl("jdbc:mysql://localhost:3306/student_project?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC\r\n");
 			config.setUsername("root");
 			config.setPassword("");
 			config.setDriverClassName("com.mysql.cj.jdbc.Driver");
