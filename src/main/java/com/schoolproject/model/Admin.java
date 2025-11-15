@@ -3,12 +3,14 @@ package com.schoolproject.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import com.schoolproject.dao.AdminDao;
+import com.schoolproject.dto.AddTeacherAdminDto;
 import com.schoolproject.dto.ListCourseAdminDto;
 import com.schoolproject.dto.ListStudentAdminDto;
 import com.schoolproject.dto.ListTeacherAdminDto;
@@ -111,8 +113,38 @@ public class Admin implements AdminDao {
 	}
 
 	@Override
-	public void addTeacher() {
-
+	public void addTeacher(AddTeacherAdminDto addTeacher) {
+		String userSql= "INSERT INTO users (first_name, last_name, email, password, role) " +
+						"VALUES (?, ?, ?, ?, 'Teacher')";
+		try (Connection connection = dataSource.getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(userSql,Statement.RETURN_GENERATED_KEYS)) {			
+	    		pstmt.setString(1, addTeacher.getName());
+	    		pstmt.setString(2, addTeacher.getSurname());
+	    		pstmt.setString(3, addTeacher.getEmail());
+	    		pstmt.setString(4, addTeacher.getPassword());
+	    		pstmt.executeUpdate();
+	    		
+	    		ResultSet rs = pstmt.getGeneratedKeys();
+	    		int userId = 0;
+	    		if(rs.next()) {
+	    			userId = rs.getInt(1);
+	    		}
+				
+	    		rs.close();
+	    		
+	    		String teacherSql = "INSERT INTO teachers (salary, user_id) VALUES (?, ?)";
+	    		try(PreparedStatement stmt = connection.prepareStatement(teacherSql)){
+	    			stmt.setString(1, addTeacher.getSalary());
+	    			stmt.setInt(2, userId);
+	    			
+	    			stmt.executeUpdate();
+	    		}
+	    		
+	    		
+			} catch (Exception e) {
+				e.printStackTrace();
+	            
+			}
 		
 	}
 

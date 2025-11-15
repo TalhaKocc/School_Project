@@ -12,6 +12,10 @@ import lombok.Setter;
 public class AddTeacherAdminDto {
 	private String name;
 	private String surname;
-	private double salary;
+	private String email;
+	private String password;
+	private String role;
+	private String salary;
+	
 	
 }
