@@ -11,7 +11,6 @@
 <div class="container">
     <h2>Not Ekleme Ekranı</h2>
 
-    <!-- Hata ve başarı mesajları -->
     <c:if test="${not empty error}">
         <div class="error">${error}</div>
     </c:if>
@@ -23,7 +22,6 @@
         <input type="hidden" name="command" 
                value="${not empty selectedCourseId ? 'TEACHER_ADD_GRADE' : 'LOAD_ADD_GRADE_PAGE'}"/>
 
-        <!-- Ders Seçimi -->
         <label for="courseId">Ders Seç:</label>
         <select name="courseId" id="courseId" required onchange="this.form.submit()">
             <option value="">-- Ders seçin --</option>
@@ -35,7 +33,6 @@
             </c:forEach>
         </select>
 
-        <!-- Ders seçildiyse öğrenci ve not alanları -->
         <c:if test="${not empty selectedCourseId}">
             <label for="studentId">Öğrenci Seç:</label>
             <select name="studentId" id="studentId" required>

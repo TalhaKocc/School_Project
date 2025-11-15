@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.schoolproject.dao.AdminDao;
+import com.schoolproject.dto.AddCourseAdminDto;
 import com.schoolproject.dto.AddTeacherAdminDto;
 import com.schoolproject.dto.ListCourseAdminDto;
 import com.schoolproject.dto.ListStudentAdminDto;
@@ -149,8 +150,17 @@ public class Admin implements AdminDao {
 	}
 
 	@Override
-	public void addCourse() {
-
+	public void addCourse(AddCourseAdminDto addCourse) {
+		String sql = "INSERT INTO courses (course_name) VALUES (?)";
 		
+		try(Connection connection = dataSource.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql)){
+			
+			pstmt.setString(1,addCourse.getCourseName());
+			pstmt.executeUpdate();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

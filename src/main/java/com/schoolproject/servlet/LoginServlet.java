@@ -22,10 +22,6 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Login login;
-    
-	// @Resource(name = "jdbc/web_"); eğer ki content.xml sayfası oluştursaydım bunu kullanacaktım name değişkenlik gösterebilir 
-	// ben zaten pool için bir sınıf oluşturdum o yüzden resource gerek yok 
-	
 
 	public void init() throws ServletException{
 		super.init();

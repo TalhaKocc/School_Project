@@ -223,11 +223,11 @@ public class Teacher implements TeacherDao{
 
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {
-	                grade = new ListGradeTeacherDto(); // ÖNCE new'le!
+	                grade = new ListGradeTeacherDto(); 
 
 	                grade.setGradeId(rs.getInt("grade_id"));
-	                grade.setStudentId(rs.getInt("student_id"));     // artık güvenli
-	                grade.setCourseId(rs.getInt("course_id"));       // artık güvenli
+	                grade.setStudentId(rs.getInt("student_id"));     
+	                grade.setCourseId(rs.getInt("course_id"));       
 	                grade.setCourseName(rs.getString("course_name"));
 	                grade.setStudentFirstName(rs.getString("first_name"));
 	                grade.setStudentLastName(rs.getString("last_name"));

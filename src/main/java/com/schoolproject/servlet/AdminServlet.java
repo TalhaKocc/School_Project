@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.schoolproject.dto.AddCourseAdminDto;
 import com.schoolproject.dto.AddTeacherAdminDto;
 import com.schoolproject.dto.ListCourseAdminDto;
 import com.schoolproject.dto.ListStudentAdminDto;
@@ -53,7 +54,6 @@ public class AdminServlet extends HttpServlet {
 			response.sendRedirect("login.jsp");
 			return;
 		}
-		int userId = (int) session.getAttribute("user_id");
 		
 		try {
             String command = request.getParameter("command");
@@ -76,21 +76,23 @@ public class AdminServlet extends HttpServlet {
 
                 case "ADMIN_ADD_TEACHER":
                     if("POST".equalsIgnoreCase(method)){
-                        // form submit edildi → DB ekle
                         addTeacher(request, response);
-                        listTeacher(request, response);
+
                     } else {
-                        // GET → form göster
                         request.getRequestDispatcher("admin-add-teacher.jsp").forward(request, response);
                     }
                     break;
 
                 case "ADMIN_ADD_COURSE":
-                    // burayı istersen ben doldurabilirim
+                	 if("POST".equalsIgnoreCase(method)){
+                         addCourse(request, response);
+
+                     } else {
+                         request.getRequestDispatcher("admin-add-course.jsp").forward(request, response);
+                     }
                     break;
 
                 default:
-                    // default olarak öğretmen listesi göster
                     listTeacher(request, response);
                     break;
             }
@@ -135,7 +137,11 @@ public class AdminServlet extends HttpServlet {
 		listTeacher(request, response);
 	}
 	
-	private void addCourse(HttpServletRequest request,HttpServletResponse response) {
+	private void addCourse(HttpServletRequest request,HttpServletResponse response)throws Exception {
+		String courseName = request.getParameter("courseName");
 		
+		AddCourseAdminDto addCourse = new AddCourseAdminDto(courseName);
+		admin.addCourse(addCourse);
+		listCourse(request, response);
 	}
 }

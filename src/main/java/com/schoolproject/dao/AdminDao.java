@@ -2,6 +2,7 @@ package com.schoolproject.dao;
 
 import java.util.List;
 
+import com.schoolproject.dto.AddCourseAdminDto;
 import com.schoolproject.dto.AddTeacherAdminDto;
 import com.schoolproject.dto.ListCourseAdminDto;
 import com.schoolproject.dto.ListStudentAdminDto;
@@ -12,6 +13,6 @@ public interface AdminDao {
 	List<ListStudentAdminDto> listStudent();
 	List<ListCourseAdminDto> listCourse();
 	void addTeacher(AddTeacherAdminDto addTEacher);
-	void addCourse();
+	void addCourse(AddCourseAdminDto addCourse);
 	
 }

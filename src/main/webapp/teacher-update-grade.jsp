@@ -11,12 +11,10 @@
 <div class="container">
     <h2>Not Güncelle</h2>
 
-    <!-- Hata mesajı -->
     <c:if test="${not empty error}">
         <div class="error">${error}</div>
     </c:if>
 
-    <!-- Not bulunamazsa -->
     <c:if test="${grade == null}">
         <p style="color: red; text-align: center;">Not bulunamadı!</p>
         <div style="text-align: center;">
@@ -24,7 +22,6 @@
         </div>
     </c:if>
 
-    <!-- Not bulunduysa formu göster -->
     <c:if test="${grade != null}">
         <form action="TeacherServlet" method="post">
             <input type="hidden" name="command" value="TEACHER_UPDATE_GRADE">
